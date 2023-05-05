@@ -1,16 +1,33 @@
-# helm-backend
-Helm chart for backends applications
+# Documentação Helm Backend
+
+Documentação do repositório do helm dos microsserviços em Go + aldeia e chronos  https://github.com/oitheia/helm-backend. 
+
+Para gerenciar os templates do helm foi criado um repositório público no github que armazena os templates e o chart do helm. Para atualizar o chart é necessário seguir esses passos:
 
 # Como atualizar chart
-```bash
-git clone helm-backend
+
+```
+git clone
 cd helm-backend
 #Antes de gerar o pacote atualizar a versao do chart no arquivo chart.yaml
 helm package ~/folder #Pasta com o template e arquivo chart.yaml e gera o *.tgz no diretorio atual
-helm repo index . #Atualiza o index.yaml com a versao
+helm repo index . #Atualiza o index.yaml
 git add .
 git commit -m "update repo"
 git push
+```
+
+# Pipeline
+
+```yaml
+# Adiciona o repositório do github
+- run:
+    name: Install helm repo from github
+    command: helm repo add helm-backend https://raw.githubusercontent.com/oitheia/helm-backend/main/ && helm repo update
+# Executa o helm upgrade com o repositório adiciona anteriormente helm-backend/service
+- run:
+    name: Helm Upgrade
+    command: helm secrets upgrade ${CIRCLE_PROJECT_REPONAME} helm-backend/service --install ....
 ```
 
 # Documentação
