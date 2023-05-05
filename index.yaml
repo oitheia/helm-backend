@@ -3,7 +3,17 @@ entries:
   service:
   - apiVersion: v2
     appVersion: 1.16.0
-    created: "2023-05-05T09:24:54.93170507-03:00"
+    created: "2023-05-05T09:34:24.925248061-03:00"
+    description: A Helm chart for backend services
+    digest: 16bc16837dbb257bdf159b312bcc03345b67a8f41b21a4805ed0a3e539cb2d2f
+    name: service
+    type: application
+    urls:
+    - service-0.1.1.tgz
+    version: 0.1.1
+  - apiVersion: v2
+    appVersion: 1.16.0
+    created: "2023-05-05T09:34:24.924945661-03:00"
     description: A Helm chart for backend services
     digest: c9cd3477bc32718970a94454c51b444bff800168a7777b81cd0429c388f7f035
     name: service
@@ -11,4 +21,4 @@ entries:
     urls:
     - service-0.1.0.tgz
     version: 0.1.0
-generated: "2023-05-05T09:24:54.825387169-03:00"
+generated: "2023-05-05T09:34:24.924345661-03:00"
