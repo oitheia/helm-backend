@@ -3,7 +3,27 @@ entries:
   service:
   - apiVersion: v2
     appVersion: 1.16.0
-    created: "2023-07-06T11:40:01.55792797-03:00"
+    created: "2023-08-31T11:56:07.900896698-03:00"
+    description: A Helm chart for backend services
+    digest: 98e559da3c978d48f98c48ae2ad9139110789ee2ccedfa06302d7784dc229142
+    name: service
+    type: application
+    urls:
+    - service-0.1.5.tgz
+    version: 0.1.5
+  - apiVersion: v2
+    appVersion: 1.16.0
+    created: "2023-08-31T11:56:07.900581298-03:00"
+    description: A Helm chart for backend services
+    digest: 8d6f9d3af1b4b11b7b23830b6d7ff0776b0f0035c8ab10605bd099224cd0ec2c
+    name: service
+    type: application
+    urls:
+    - service-0.1.4.tgz
+    version: 0.1.4
+  - apiVersion: v2
+    appVersion: 1.16.0
+    created: "2023-08-31T11:56:07.892302598-03:00"
     description: A Helm chart for backend services
     digest: 8f60ee5693b245e968c13bc0b3f541137d9fbecdf112f7ee5f55bad89ac0c529
     name: service
@@ -13,7 +33,7 @@ entries:
     version: 0.1.3
   - apiVersion: v2
     appVersion: 1.16.0
-    created: "2023-07-06T11:40:01.55775027-03:00"
+    created: "2023-08-31T11:56:07.891755998-03:00"
     description: A Helm chart for backend services
     digest: 73f2fa7dcc5535c59e91f08aa6e5b8de32d4fce24ff52003ae8321b94f7ed91b
     name: service
@@ -23,7 +43,7 @@ entries:
     version: 0.1.2
   - apiVersion: v2
     appVersion: 1.16.0
-    created: "2023-07-06T11:40:01.55757017-03:00"
+    created: "2023-08-31T11:56:07.866320198-03:00"
     description: A Helm chart for backend services
     digest: 16bc16837dbb257bdf159b312bcc03345b67a8f41b21a4805ed0a3e539cb2d2f
     name: service
@@ -33,7 +53,7 @@ entries:
     version: 0.1.1
   - apiVersion: v2
     appVersion: 1.16.0
-    created: "2023-07-06T11:40:01.55738987-03:00"
+    created: "2023-08-31T11:56:07.827664897-03:00"
     description: A Helm chart for backend services
     digest: c9cd3477bc32718970a94454c51b444bff800168a7777b81cd0429c388f7f035
     name: service
@@ -41,4 +61,4 @@ entries:
     urls:
     - service-0.1.0.tgz
     version: 0.1.0
-generated: "2023-07-06T11:40:01.55702117-03:00"
+generated: "2023-08-31T11:56:07.667481095-03:00"
