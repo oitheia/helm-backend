@@ -1,0 +1,74 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "service.fullname" . }}
+  labels:
+    {{- include "service.labels" . | nindent 4 }}
+spec:
+  {{- if not .Values.autoscaling.enabled }}
+  replicas: {{ .Values.replicaCount }}
+  {{- end }}
+  selector:
+    matchLabels:
+      {{- include "service.selectorLabels" . | nindent 6 }}
+  strategy:
+    {{ if .Values.strategy }}
+    {{ if ne .Values.strategy.type "Recreate" }}
+    rollingUpdate:
+      maxSurge: {{ if .Values.strategy -}} {{ .Values.strategy.maxSurge | default "25%" }} {{- else -}} "25%" {{- end }} 
+      maxUnavailable: {{ if .Values.strategy -}} {{ .Values.strategy.maxUnavailable | default "0%" }} {{- else -}} "0%" {{- end }} 
+    {{ end }}
+    {{ else }}
+    rollingUpdate:
+      maxSurge: 25%
+      maxUnavailable: 0%
+    {{ end }}
+    type: {{ if .Values.strategy -}} {{ .Values.strategy.type | default "RollingUpdate" }} {{- else -}} "RollingUpdate" {{- end }}
+  template:
+    metadata:
+      labels:
+        {{- include "service.selectorLabels" . | nindent 8 }}
+    spec:
+      {{- if .Values.serviceAccountRoleArn }}
+      serviceAccountName: {{ include "service.fullname" . }}
+      {{- end }}
+      containers:
+        - name: {{ .Chart.Name }}
+          image: "{{- include "repository" . -}}:{{ .Values.image.tag }}"
+          imagePullPolicy: "IfNotPresent"
+          ports:
+            - name: {{ .Chart.Name }}
+              containerPort: {{ .Values.appPort }}
+              protocol: TCP
+          livenessProbe:
+            httpGet:
+              path: {{ .Values.healthPath }}
+              port: {{ .Values.appPort }}
+            initialDelaySeconds: {{ .Values.livenessProbe.initialDelaySeconds }}
+            periodSeconds: {{ .Values.livenessProbe.periodSeconds }}
+            timeoutSeconds: {{ .Values.livenessProbe.timeoutSeconds }}
+            successThreshold: {{ .Values.livenessProbe.successThreshold }}
+            failureThreshold: {{ .Values.livenessProbe.failureThreshold }}
+          readinessProbe:
+            httpGet:
+              path: {{ .Values.healthPath }}
+              port: {{ .Values.appPort }}
+            initialDelaySeconds: {{ .Values.readinessProbe.initialDelaySeconds }}
+            periodSeconds: {{ .Values.readinessProbe.periodSeconds }}
+            timeoutSeconds: {{ .Values.readinessProbe.timeoutSeconds }}
+            successThreshold: {{ .Values.readinessProbe.successThreshold }}
+            failureThreshold: {{ .Values.readinessProbe.failureThreshold }}
+          resources:
+            {{- toYaml .Values.resources | nindent 12 }}
+          envFrom:
+            - secretRef:
+                name: {{ include "service.fullname" . }}
+      {{- if default .Values.topologySpreadConstraints false }}          
+      topologySpreadConstraints:
+        - maxSkew: {{ default 1 .Values.topologySpreadConstraints.maxSkew  }}
+          topologyKey: {{ default "" .Values.topologySpreadConstraints.topologyKey }}
+          whenUnsatisfiable: {{ default  "" .Values.topologySpreadConstraints.whenUnsatisfiable }}
+          labelSelector:
+            matchLabels:
+              {{- include "service.selectorLabels" . | nindent 14 }}
+      {{- end }}
